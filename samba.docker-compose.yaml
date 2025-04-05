@@ -1,0 +1,17 @@
+# a custom samba-server which i can connect my network-scanner to.
+# the scanner writes the files to the samba-server,
+# which is the same folder as the consume-folder of paperless-ngx...
+
+services:
+    samba:
+      image: dockurr/samba
+      container_name: ${SAMBA_CONTAINER_NAME}
+      environment:
+        NAME: "Data"
+        USER: ${SAMBA_USERNAME}
+        PASS: ${SAMBA_PASSWORD}
+      ports:
+        - 445:445
+      volumes:
+        - "${PAPERLESS_CONSUMPTION_DIR}:/storage"
+      restart: always
